@@ -1,0 +1,30 @@
+ ListNode* swapPairs(ListNode* head) {
+        
+        
+        if(head == NULL || head->next == NULL) return head;
+        
+        ListNode *tmp = new ListNode();
+        tmp->next = head;
+        ListNode *cur = tmp;
+        
+        while(cur->next != NULL && cur->next->next != NULL){
+            ListNode *first = cur->next; // first
+            ListNode *second = cur->next->next; // second
+            
+            first->next = second->next; // first ke next main second ka next;
+            
+            cur->next = second;
+            second->next = first;
+            
+//             move cur to second node whihc is now first node cause of swappin;
+            cur = first;
+        }
+        
+        return tmp->next;
+//         tmp->next = head of linkedlist;
+        
+       
+        
+        
+        
+    }
