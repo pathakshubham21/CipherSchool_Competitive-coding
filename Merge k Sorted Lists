@@ -1,0 +1,36 @@
+ListNode* mergeList(ListNode *list1, ListNode *list2)
+{
+
+    if(list1==NULL)
+        return list2;
+		
+    if(list2==NULL)
+        return list1;
+    
+    ListNode * result=NULL;
+    
+    if(list1->val<list2->val)
+    {
+        result=list1;
+        result->next=mergeList(list1->next,list2);
+    }
+    else
+    {
+        result=list2;
+        result->next=mergeList(list1,list2->next);
+    }
+    return result;
+}
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+    int n=lists.size();
+    if(n==0)
+        return NULL;
+    if(n==1)
+        return lists[0];
+    if(n==2)
+        return mergeList(lists[0],lists[1]);
+    
+    vector<ListNode*>l1(lists.begin(), lists.begin()+n/2);
+    vector<ListNode*>l2(lists.begin()+n/2, lists.end());
+    return mergeList(mergeKLists(l1),mergeKLists(l2));
+}
