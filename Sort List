@@ -1,0 +1,65 @@
+  ListNode* sortList(ListNode* head) {
+        if(head == NULL || head->next == NULL)
+            return head;
+        
+        return mergeSort(head);      
+    }
+    
+    ListNode* mergeSort(ListNode* head)
+    {
+        if(head == NULL || head->next == NULL)
+            return head;
+        
+        ListNode* l1;
+        ListNode* l2;
+        
+        findHalves(head, &l1, &l2);
+        
+        ListNode* a = mergeSort(l1);
+        ListNode* b = mergeSort(l2);
+        
+        return merge(a,b);
+    }
+    
+    ListNode* merge(ListNode* L1, ListNode* L2)
+    {
+        ListNode* result = NULL;
+        
+        if(L1 == NULL)
+            return L2;
+        
+        if(L2 == NULL)
+            return L1;
+        
+        if(L1->val <= L2->val)
+        {
+            result = L1;
+            result->next = merge(L1->next, L2);
+        }
+        else
+        {
+            result = L2;
+            result->next = merge(L1, L2->next);            
+        }
+        
+        return result;
+    }
+        
+    void findHalves(ListNode* head, ListNode** s1, ListNode** s2)
+    {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast != NULL)
+        {
+            fast = fast->next;
+            if(fast != NULL && fast->next != NULL)
+            {
+                slow = slow->next;
+                fast = fast->next;
+            }
+        }
+        *s1 = head;
+        *s2 = slow->next;
+        slow->next = NULL;
+    }
