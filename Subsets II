@@ -1,0 +1,22 @@
+void findAllSubsets(vector<int>& nums, int start, vector<int>& out, vector<vector<int>>& res) {
+        res.push_back(out);
+        for (int i = start; i < nums.size(); i++) {
+            /// because nums has sorted, so filter i which nums[i] == nums[i - 1]
+            if (i > start && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            out.push_back(nums[i]);
+            findAllSubsets(nums, i + 1, out, res);
+            out.pop_back();
+        }
+        return;
+    }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        /// sort first
+        sort(nums.begin(), nums.end());
+        vector<int> out{};
+        vector<vector<int>> res;
+        findAllSubsets(nums, 0, out, res);
+        return res;
+    }Subsets II
